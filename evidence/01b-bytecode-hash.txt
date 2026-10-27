@@ -1,0 +1,6 @@
+$ pnpm bytecode:hash
+$ node scripts/bytecode-hash.mjs
+contract            : EventRegistry
+bytecode bytes      : 968
+bytecode sha256     : 7c57faea25b1208acc8f7fcab4d36fc025c91c083b535abcfc92e6a6bc9dd4f1
+deployedBytecode sha: b607aba8acb097e182b1a23be825fe5a07a8c0d2edc5f1cdf3d5438bcf09310b

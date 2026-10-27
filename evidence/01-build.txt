@@ -1,0 +1,6 @@
+$ pnpm build:prod
+$ hardhat build --build-profile production
+
+
+
+Compiled 3 Solidity files with solc 0.8.36 (evm target: osaka)

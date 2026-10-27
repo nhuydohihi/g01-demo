@@ -1,0 +1,30 @@
+$ pnpm test:trace
+$ DEMO_FAIL=true hardhat test solidity test/FailureTraceDemo.t.sol -vvv
+No contracts to compile
+
+Running Solidity tests
+
+  test/FailureTraceDemo.t.sol:FailureTraceDemo
+    1) test_DEMO_NonOwnerSetsCapacity_ShouldFail()
+      Call Traces:
+        [381204] FailureTraceDemo::test_DEMO_NonOwnerSetsCapacity_ShouldFail()
+          ├─ [0] VM::envOr("DEMO_FAIL", false) [staticcall]
+          │    └─ ← <env var value>
+          ├─ [0] VM::skip(false)
+          ├─ [342453] → new EventRegistry@0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
+          │    └─ ← 1598 bytes of code
+          ├─ [0] VM::prank(0x0000000000000000000000000000000000000B0b)
+          ├─ [733] EventRegistry::setCapacity(5)
+          │    └─ ← NotOwner(0x0000000000000000000000000000000000000B0b)
+          └─ ← NotOwner(0x0000000000000000000000000000000000000B0b)
+
+
+  0 passing
+  1 failing
+
+  1) FailureTraceDemo#test_DEMO_NonOwnerSetsCapacity_ShouldFail()
+    Error: NotOwner(0x0000000000000000000000000000000000000B0b)
+    Stack Trace Warning: The test is not safe to replay because it uses impure cheatcodes: envOr(string,bool)
+    Try rerunning your tests with -vvvvv or above.
+
+[ELIFECYCLE] Command failed with exit code 1.

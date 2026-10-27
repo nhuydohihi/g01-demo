@@ -1,0 +1,31 @@
+{
+  "name": "g01-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "IS355 Session 7 G01 - reproducible and safe Solidity 0.8.36 + Hardhat 3 workflow demo",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "build": "hardhat build",
+    "build:prod": "hardhat build --build-profile production",
+    "bytecode:hash": "node scripts/bytecode-hash.mjs",
+    "test": "hardhat test",
+    "test:sol": "hardhat test solidity",
+    "test:trace": "DEMO_FAIL=true hardhat test solidity test/FailureTraceDemo.t.sol -vvv",
+    "deploy:local": "hardhat ignition deploy ignition/modules/EventRegistry.ts",
+    "deploy:sepolia": "hardhat ignition deploy ignition/modules/EventRegistry.ts --network sepolia",
+    "verify:sepolia": "hardhat verify etherscan --network sepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "3.1.9",
+    "@nomicfoundation/hardhat-toolbox-viem": "5.0.7",
+    "@types/node": "22.20.5",
+    "forge-std": "github:foundry-rs/forge-std#v1.16.2",
+    "hardhat": "3.21.0",
+    "typescript": "6.0.3",
+    "viem": "2.57.11"
+  }
+}

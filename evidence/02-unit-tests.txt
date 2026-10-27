@@ -1,0 +1,26 @@
+$ pnpm test:sol
+$ hardhat test solidity
+
+Compiled 3 Solidity files with solc 0.8.36 (evm target: osaka)
+
+Running Solidity tests
+
+  test/FailureTraceDemo.t.sol:FailureTraceDemo
+    - test_DEMO_NonOwnerSetsCapacity_ShouldFail()
+
+  contracts/EventRegistry.t.sol:EventRegistryTest
+    ✔ test_RevertWhen_RegisterTwice()
+    ✔ test_RevertWhen_NotOwnerSetsCapacity()
+    ✔ test_RevertWhen_EventFull()
+    ✔ test_RevertWhen_DeployWithZeroCapacity()
+    ✔ test_RevertWhen_CapacityBelowRegistered()
+    ✔ test_Register()
+    ✔ test_OwnerCanSetCapacity()
+    ✔ test_EmitsRegistered()
+    ✔ testFuzz_SetCapacity(uint256) (runs: 256)
+    ✔ testFuzz_RevertWhen_AnyNonOwnerSetsCapacity(address) (runs: 256)
+
+
+  10 passing
+  1 skipped
+

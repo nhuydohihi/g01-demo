@@ -1,0 +1,28 @@
+$ pnpm deploy:local
+$ hardhat ignition deploy ignition/modules/EventRegistry.ts
+
+You are running Hardhat Ignition against an in-process instance of Hardhat Network.
+This will execute the deployment, but the results will be lost.
+You can use --network <network-name> to deploy to a different network.
+
+Hardhat Ignition starting for [ EventRegistryModule ]...Hardhat Ignition 🚀
+
+Deploying [ EventRegistryModule ]
+
+Batch #1
+  Executing EventRegistryModule#EventRegistry...
+
+Batch #1
+  Executing EventRegistryModule#EventRegistry...
+
+Batch #1
+  Executed EventRegistryModule#EventRegistry
+
+Batch #1
+  Executed EventRegistryModule#EventRegistry
+
+[ EventRegistryModule ] successfully deployed 🚀
+
+Deployed Addresses
+
+EventRegistryModule#EventRegistry - 0x5FbDB2315678afecb367f032d93F642f64180aa3
