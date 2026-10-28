@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Đọc phiên bản pnpm từ "packageManager" trong package.json (12.15.0)
+      - uses: pnpm/action-setup@v4
+
+      # Đọc phiên bản Node từ .nvmrc (24.11.1)
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install (đúng lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Compile (production profile)
+        run: pnpm build:prod
+
+      - name: Reproducibility — bytecode phải trùng hash đã ghi
+        run: |
+          pnpm -s bytecode:hash | tee ci-hash.txt
+          grep -q "7c57faea25b1208acc8f7fcab4d36fc025c91c083b535abcfc92e6a6bc9dd4f1" ci-hash.txt
+          grep -q "b607aba8acb097e182b1a23be825fe5a07a8c0d2edc5f1cdf3d5438bcf09310b" ci-hash.txt
+
+      - name: Unit tests
+        run: pnpm test:sol
+
+      - name: Failure-trace demo phải FAIL (bắt được NotOwner)
+        run: |
+          if pnpm test:trace > trace.txt 2>&1; then
+            echo "Test demo lẽ ra phải fail"; exit 1
+          fi
+          cat trace.txt
+          grep -q "NotOwner" trace.txt
