@@ -1,0 +1,26 @@
+# Chép lại từ Terminal của NhuYDo (macOS) — deploy + verify trên Sepolia
+# Tx hash và block lấy từ ignition/deployments/chain-11155111/journal.jsonl
+
+$ pnpm deploy:sepolia
+$ hardhat ignition deploy ignition/modules/EventRegistry.ts --network sepolia
+...
+EventRegistryModule#EventRegistry - 0x50736c10a7e1ad92ed298661a6df8cD86b8301C1
+
+  deployer : 0x87b27f8103b9610f2bbcb94338a5bb59280c92ba
+  tx hash  : 0x2ef24968e18aed7dd476b6b4467db9ac6ff09be90c6ddab9cf3b303027cd8989
+  block    : 12012910 (status SUCCESS)
+  constructor arg capacity = 100
+
+$ pnpm verify:sepolia 0x50736c10a7e1ad92ed298661a6df8cD86b8301C1 100
+$ hardhat verify etherscan --network sepolia 0x50736c10a7e1ad92ed298661a6df8cD86b8301C1 100
+[hardhat-keystore] Enter the password: ****************
+
+Submitted source code for verification on Etherscan:
+  contracts/EventRegistry.sol:EventRegistry
+  Address: 0x50736c10a7e1ad92ed298661a6df8cD86b8301C1
+
+Waiting for verification result...
+
+Contract verified successfully on Etherscan!
+  contracts/EventRegistry.sol:EventRegistry
+  Explorer: https://sepolia.etherscan.io/address/0x50736c10a7e1ad92ed298661a6df8cD86b8301C1#code

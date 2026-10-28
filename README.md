@@ -62,13 +62,14 @@ Giá trị được lưu mã hóa bằng `npx hardhat keystore set <TÊN>`, nằ
 | --- | --- |
 | Network | Sepolia |
 | Chain ID | 11155111 |
-| Contract address | _(điền)_ |
-| Deploy tx hash | _(điền)_ |
-| Deployer (admin/owner) | _(điền — chính là ví deploy)_ |
+| Contract address | `0x50736c10a7e1ad92ed298661a6df8cD86b8301C1` |
+| Deploy tx hash | [`0x2ef24968…cd8989`](https://sepolia.etherscan.io/tx/0x2ef24968e18aed7dd476b6b4467db9ac6ff09be90c6ddab9cf3b303027cd8989) |
+| Deployer (admin/owner) | `0x87B27F8103B9610F2bBcB94338a5BB59280C92BA` (ví testnet) |
 | Constructor arg `capacity` | 100 |
 | Build profile | production |
-| Etherscan (verified) | _(điền link)_ |
-| Git commit | _(điền `git rev-parse --short HEAD`)_ |
+| Block | 12012910 |
+| Etherscan (verified) | https://sepolia.etherscan.io/address/0x50736c10a7e1ad92ed298661a6df8cD86b8301C1#code |
+| Git commit của mã đã deploy | `62c3a9e` (commit khởi tạo; mã contract không đổi từ đó) |
 
 Ignition tự lưu bản ghi chi tiết trong `ignition/deployments/chain-11155111/` → commit thư mục này.
 
@@ -79,4 +80,4 @@ Ignition tự lưu bản ghi chi tiết trong `ignition/deployments/chain-111551
 3. `evmVersion` ghi rõ `osaka` (giá trị Hardhat báo là target khi build với 0.8.36) thay vì để mặc định. Cần đảm bảo mạng đích hỗ trợ Osaka; nếu deploy lỗi opcode, đổi sang `prague` và ghi lại lý do.
 4. Bỏ file mẫu (`Counter.*`, `scripts/send-op-tx.ts`, mạng `hardhatOp`) và các file agent do template sinh (`AGENTS.md`, `.agents/`) để repo chỉ chứa phần demo.
 5. Test failure trace được đặt trong `test/` nhưng skip mặc định (`vm.skip(!vm.envOr("DEMO_FAIL", false))`) để `pnpm test` luôn xanh.
-6. Project được dựng và chạy lần đầu trên Linux arm64 / Node 22.23.4, nơi solc không có bản native nên Hardhat dùng **bản WASM** của solc 0.8.36. Trên macOS, Hardhat dùng bản native. Hai bản cùng phiên bản phải cho **cùng bytecode** — kiểm tra bằng `pnpm bytecode:hash` và so với `evidence/01b-bytecode-hash.txt`.
+6. Project được dựng lần đầu trên Linux arm64 (Node 22.23.4) và chạy lại trên macOS (Node 24.11.1). Hardhat 3.21.0 luôn tải cả bản native lẫn bản WASM của solc 0.8.36 nhưng **ưu tiên bản native** khi compile (đã kiểm tra trong mã nguồn trình tải compiler). Hai binary native khác nhau (Linux arm64 và macOS) cho **cùng bytecode** (sha256 `7c57fa…dd4f1`) và cùng lượng gas trong failure trace — xem `evidence/01b-bytecode-hash.txt`. *Đính chính:* bản README trước ghi nhầm rằng Linux arm64 dùng bản WASM.

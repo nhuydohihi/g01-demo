@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_36-4df79872edc777f73e1bae2dfacab402c0c6e8bd",
+  "solcVersion": "0.8.36",
+  "solcLongVersion": "0.8.36+commit.8a079791",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.21.0"
+  },
+  "userSourceNameMap": {
+    "contracts/EventRegistry.sol": "project/contracts/EventRegistry.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/EventRegistry.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.36;\n\n/// @title EventRegistry — demo cho IS355 Session 7 G01\n/// @notice Owner tạo một sự kiện có sức chứa giới hạn; người dùng tự đăng ký.\n/// @dev Minh họa: access control (onlyOwner), custom errors, events,\n///      checks-effects pattern, và không dùng tx.origin.\ncontract EventRegistry {\n    address public immutable owner;\n    uint256 public capacity;\n    uint256 public registeredCount;\n    mapping(address => bool) public isRegistered;\n\n    error NotOwner(address caller);\n    error AlreadyRegistered(address user);\n    error EventFull(uint256 capacity);\n    error InvalidCapacity(uint256 requested);\n\n    event Registered(address indexed user, uint256 count);\n    event CapacityChanged(uint256 oldCapacity, uint256 newCapacity);\n\n    constructor(uint256 initialCapacity) {\n        if (initialCapacity == 0) revert InvalidCapacity(initialCapacity);\n        owner = msg.sender;\n        capacity = initialCapacity;\n    }\n\n    modifier onlyOwner() {\n        if (msg.sender != owner) revert NotOwner(msg.sender); // msg.sender, không phải tx.origin\n        _;\n    }\n\n    function register() external {\n        // Checks\n        if (isRegistered[msg.sender]) revert AlreadyRegistered(msg.sender);\n        if (registeredCount >= capacity) revert EventFull(capacity);\n        // Effects\n        isRegistered[msg.sender] = true;\n        registeredCount += 1;\n        emit Registered(msg.sender, registeredCount);\n        // (Không có Interactions: không gọi ra contract ngoài)\n    }\n\n    function setCapacity(uint256 newCapacity) external onlyOwner {\n        if (newCapacity == 0 || newCapacity < registeredCount) revert InvalidCapacity(newCapacity);\n        emit CapacityChanged(capacity, newCapacity);\n        capacity = newCapacity;\n    }\n}\n"
+      }
+    }
+  }
+}
